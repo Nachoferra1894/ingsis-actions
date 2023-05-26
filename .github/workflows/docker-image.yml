@@ -28,8 +28,8 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
-        - name: Build the hello-docker Docker image
+        - name: Build the Docker image
           run: |
-             docker build . --tag ghcr.io/${{ OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
-             docker run ghcr.io/${{ OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
-             docker push ghcr.io/${{ OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
+             docker build . --tag ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
+             docker run ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
+             docker push ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
