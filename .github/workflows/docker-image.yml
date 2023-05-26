@@ -28,8 +28,8 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
-        - name: Build the Docker image
-          run: |
-             docker build . --tag ghcr.io/Nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
-             docker run ghcr.io/Nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
-             docker push ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
+        - name: Build and tag Docker image
+          run: docker build .
+
+        - name: Publish Docker image to GitHub Packages
+          run: ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
