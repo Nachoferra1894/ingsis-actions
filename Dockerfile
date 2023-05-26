@@ -1,20 +1,14 @@
-FROM node:18-alpine AS deps
+# Use the official Corretto 18 base image
+FROM amazoncorretto:18
 
+# Set the working directory in the container
 WORKDIR /app
 
-COPY package.json ./
+# Copy the Spring server JAR file to the container
+COPY target/my-spring-server.jar /app/my-spring-server.jar
 
-RUN npm install
+# Expose the port on which the server will run
+EXPOSE 8080
 
-# Build source code
-FROM node:18-alpine AS builder
-
-WORKDIR /app
-VOLUME /app
-
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
-RUN npm run build
-
-CMD ["npm", "start"]
+# Set the entry point for the container
+ENTRYPOINT ["java", "-jar", "/app/my-spring-server.jar"]
