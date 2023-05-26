@@ -1,14 +1,16 @@
 name: Docker Image
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       image-name:
         description: 'Docker image name'
         required: true
+        type: string
       image-version:
         description: 'Docker image version'
         required: true
+        type: string
 
 jobs:
   build-and-push:
