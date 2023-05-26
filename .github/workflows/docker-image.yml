@@ -1,9 +1,16 @@
 name: Docker Publish
 
 on:
-  push:
-    branches:
-      - main  # Change this to the branch you want to trigger the action on
+  workflow_call:
+    inputs:
+      image-name:
+        description: The name of the image to publish
+        type: string
+        required: true
+      image-version:
+        description: The version of the image to publish
+        type: string
+        required: true
 
 jobs:
   build-and-publish:
@@ -28,4 +35,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: docker.pkg.github.com/${{ github.repository }}/IMAGE_NAME:IMAGE_VERSION
+          tags: docker.pkg.github.com/${{ github.repository }}/${{ inputs.image-name }}:${{ inputs.image-version }}
