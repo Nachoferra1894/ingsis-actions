@@ -30,6 +30,6 @@ jobs:
             password: ${{ secrets.GITHUB_TOKEN }}
         - name: Build the Docker image
           run: |
-             docker build . --tag ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
-             docker run ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
+             docker build . --tag ghcr.io/Nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
+             docker run ghcr.io/Nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
              docker push ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
