@@ -32,8 +32,11 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
-        - name: Build and tag Docker image
-          run: docker build -t ${{ inputs.image-name }} . --build-arg jar_file=${{ inputs.jar }}
 
-        - name: Publish Docker image to GitHub Packages
-          run: ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
+        - name: Build and push Docker image    
+          uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+          with:
+            context: .
+            push: ${{ github.event_name != 'pull_request' }}
+            build-args: 'jar_file=${{ inputs.jar }}'
+            tags: ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} 
