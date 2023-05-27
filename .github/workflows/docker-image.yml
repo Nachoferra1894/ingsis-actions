@@ -11,10 +11,11 @@ on:
         description: 'Docker image version'
         required: true
         type: string
-      jar:
-        description: 'Jar file name'
-        required: true
-        type: string
+      custom-dockerfile:
+          description: 'If you want to use a custom Dockerfile, the path to the image Dockerfile'
+          required: false
+          type: string
+          default: '.'
 
 jobs:
   build-and-push:
@@ -36,7 +37,6 @@ jobs:
         - name: Build and push Docker image    
           uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
           with:
-            context: .
+            context: ${{ inputs.custom-dockerfile }}
             push: ${{ github.event_name != 'pull_request' }}
-            build-args: 'jar_file=${{ inputs.jar }}'
             tags: ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} 
