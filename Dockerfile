@@ -1,41 +1,14 @@
-#
-# Set a variable that can be used in all stages.
-#
-ARG APP_HOME=/app
+FROM gradle:4.7.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon 
 
-#
-# Gradle image for the build stage.
-#
-FROM gradle:jdk8 as build-image
+FROM openjdk:17-slim
 
-#
-# Set the working directory.
-#
-WORKDIR $APP_HOME
-
-#
-# Copy the Gradle config, source code, and static analysis config
-# into the build container.
-#
-COPY --chown=gradle:gradle build.gradle settings.gradle $APP_HOME/
-COPY --chown=gradle:gradle src $APP_HOME/src
-
-#
-# Build the application.
-#
-RUN gradle --no-daemon build
-
-#
-# Java image for the application to run in.
-#
-FROM openjdk:17-alpine
-
-#
-# Copy the jar file in and name it app.jar.
-#
-COPY --from=build-image $APP_HOME/build/libs/*.jar app.jar
-#
-# The command to run when the container starts.
-#
 EXPOSE 8080
-ENTRYPOINT java -jar app.jar
+
+RUN mkdir /app
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
+
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
