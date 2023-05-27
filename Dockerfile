@@ -33,6 +33,9 @@ FROM openjdk:17-alpine
 #
 # Copy the jar file in and name it app.jar.
 #
-EXPOSE 8080
 COPY --from=build-image $APP_HOME/build/libs/*.jar app.jar
-
+#
+# The command to run when the container starts.
+#
+EXPOSE 8080
+ENTRYPOINT java -jar app.jar
