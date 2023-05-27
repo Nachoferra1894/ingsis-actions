@@ -11,6 +11,10 @@ on:
         description: 'Docker image version'
         required: true
         type: string
+      jar:
+        description: 'Jar file name'
+        required: true
+        type: string
 
 jobs:
   build-and-push:
@@ -29,7 +33,7 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
         - name: Build and tag Docker image
-          run: docker build -t ${{ inputs.image-name }} .
+          run: docker build -t ${{ inputs.image-name }} . --build-arg jar_file=${{ inputs.jar }}
 
         - name: Publish Docker image to GitHub Packages
           run: ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} .
