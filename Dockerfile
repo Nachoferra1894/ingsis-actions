@@ -1,11 +1,12 @@
 # Use the official Corretto 18 base image
-FROM amazoncorretto:18
+FROM amazoncorretto:17
 
 # Set the working directory in the container
 WORKDIR /app
+ARG jar_file
 
 # Copy the Spring server JAR file to the container
-COPY target/my-spring-server.jar /app/my-spring-server.jar
+COPY build/libs/${jar_file} /app/${jar_file}
 
 # Expose the port on which the server will run
 EXPOSE 8080
