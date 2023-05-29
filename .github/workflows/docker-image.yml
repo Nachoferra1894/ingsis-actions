@@ -39,4 +39,4 @@ jobs:
           with:
             context: ${{ inputs.custom-dockerfile }}
             push: ${{ github.event_name != 'pull_request' }}
-            tags: ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} 
+            tags: ghcr.io/nachoferra1894/${{ inputs.image-name }}:${{ inputs.image-version }} 
