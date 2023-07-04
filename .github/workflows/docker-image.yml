@@ -34,5 +34,5 @@ jobs:
             GITHUB_ACTOR: ${{ github.repository_owner }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
-            run: docker build --build-arg GITHUB_ACTOR=${{ github.actor }} --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
+            docker build --build-arg GITHUB_ACTOR=${{ github.actor }} --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
             docker push ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }}
