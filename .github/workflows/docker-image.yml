@@ -29,8 +29,8 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Build and push Docker image    
-          uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
-          with:
-            push: ${{ github.event_name != 'pull_request' }}
-            tags: ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} 
+        - name: Build and push Docker image
+          env:
+            GITHUB_ACTOR: ${{ github.repository_owner }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            run: docker build --build-arg OWNER_LC=$OWNER_LC -t ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
