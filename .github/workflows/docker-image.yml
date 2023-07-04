@@ -33,4 +33,4 @@ jobs:
           env:
             GITHUB_ACTOR: ${{ github.repository_owner }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: docker build --build-arg OWNER_LC=$OWNER_LC -t ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
+          run: docker build --build-arg GITHUB_ACTOR=${{ github.actor }} --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
