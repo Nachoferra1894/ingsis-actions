@@ -33,4 +33,6 @@ jobs:
           env:
             GITHUB_ACTOR: ${{ github.repository_owner }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: docker build --build-arg GITHUB_ACTOR=${{ github.actor }} --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ghcr.io/${{ env.OWNER_LC }}/${{ inputs.image-name }}:${{ inputs.image-version }} .
+          run: |
+            docker build --build-arg GITHUB_ACTOR=${{ secrets.GITHUB_ACTOR }} --build-arg GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} -t ghcr.io/${{ env.OWNER_LC }}/snippet-managment-service-snippet:${{ github.run_number }} .
+            docker push ghcr.io/${{ env.OWNER_LC }}/snippet-managment-service-snippet:${{ github.run_number }}
